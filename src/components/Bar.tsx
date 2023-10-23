@@ -21,14 +21,13 @@ const Bar: React.FC<iBar> = ({onCategoryChange, categories, onSortChange}) => {
                     <Menu.Item key={category.slug}>{category.title}</Menu.Item>
                 ))}
             </Menu>
-            <Menu onClick={(e) => { setCurrentSort(e.key); onSortChange(e.key) } }
+            <Menu onClick={(e) => { setCurrentSort(e.key); onSortChange(e.key) }}
                 selectedKeys={[currentSort]} mode="horizontal" >
                 <Menu.Item key="latest">Latest</Menu.Item>
                 <Menu.Item key="oldest">Oldest</Menu.Item>
                 <Menu.Item key="popular">Popular</Menu.Item>
             </Menu>
         </div>
-
     );
 };
 

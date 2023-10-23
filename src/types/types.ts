@@ -1,3 +1,4 @@
+
 export type UnsplashPhoto = {
 	id: string;
 	urls: {

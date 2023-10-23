@@ -6,17 +6,23 @@ import PhotosPage from "@/app/photos/page";
 import {getTopics, UnsplashResponseTopics} from "@/api/topics";
 import {UnsplashPhoto, UnsplashTopics} from "@/types/types";
 import {getPhotos, UnsplashResponse} from "@/api/photos";
+import {Pagination} from "antd";
+
 export default function PhotosLayout ({children}: PropsWithChildren<unknown>) {
     const sortByOptions = ["popularity", "date"];
     const [categories, setCategories] = useState<UnsplashTopics[]>([]);
     const [category, setCategory] = useState("animals");
+    const [order_by, setOrderBy] = useState("")
 
     //photos
     const [photos, setPhotos] = useState<UnsplashPhoto[]>([]);
-    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true)
-    const [order_by, setOrderBy] = useState("")
-    // latest, oldest, popular; default: latest
+
+    //pagination
+    const [pageSize, setPageSize] = useState(10);
+    const [page, setPage] = useState(0);
+    const [total, setTotal] = useState(0);
+
     useEffect(() => {
         const fetchTopics = async () => {
             const response: UnsplashResponseTopics = await getTopics();
@@ -29,28 +35,39 @@ export default function PhotosLayout ({children}: PropsWithChildren<unknown>) {
         const fetchPhotos = async () => {
             const response: UnsplashResponse = await getPhotos({
                 page,
-                per_page: 5,
+                per_page: pageSize,
                 category,
                 order_by,
             });
+            setTotal(parseInt(response.headers.get("X-Total") || "0"));
             setPhotos(response.data);
             setLoading(false);
         };
         fetchPhotos()
-    }, [page, category, order_by]);
+    }, [page, category, order_by, pageSize]);
 
-    const handleCategoryChange = (category: string) => {
-        setCategory(category);
+    const handlePaginationChange = (page: number, pageSize: number | undefined) => {
+        setPage(page);
+        setPageSize(pageSize || 10);
+        console.log(page, pageSize);
     };
-    const handleSortChange = (order_by: string) => {
-        setOrderBy(order_by);
-    };
-
     return (
-        <div className={'mt-10 mb-10'}>
-            <div className={'mb-10'}>
-                <Bar onSortChange={handleSortChange} categories={categories} onCategoryChange={handleCategoryChange}/>
-            </div>
+    <div className={'mt-10 mb-10'}>
+        <div className={'mb-10'}>
+            <Bar onSortChange={(order_by) => setOrderBy(order_by)} categories={categories} onCategoryChange={(category) => {setCategory(category); setPage(1)}}/>
+        </div>
+        <div className={'mb-10'}>
             <PhotosPage photos={photos} category={category} loading={loading}/>
-        </div>)
+        </div>
+        <Pagination
+            current={page}
+            pageSize={pageSize}
+            total={total}
+            onChange={handlePaginationChange}
+            showSizeChanger
+            onShowSizeChange={handlePaginationChange}
+            pageSizeOptions={[5,10,20,30]}
+        />
+
+    </div>)
 }
