@@ -13,3 +13,9 @@ export type UnsplashPhoto = {
 	created_at: string;
 	links: { html: string; }
 };
+
+export type UnsplashTopics = {
+	id: string;
+	slug: string;
+	title: string;
+}
