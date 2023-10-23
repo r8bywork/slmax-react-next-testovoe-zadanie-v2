@@ -1,36 +1,16 @@
 "use client";
 import { UnsplashPhoto } from "@/types/types";
-import { useEffect, useState } from "react";
-import { UnsplashResponse, getPhotos } from "@/api/photos";
+import React, { useEffect, useState } from "react";
 import {Avatar, Card } from "antd";
 import "./photos.css"
-const PhotosPage = () => {
+
+interface iPhotos {
+    category: string;
+    photos: UnsplashPhoto[];
+    loading: boolean;
+}
+const PhotosPage: React.FC<iPhotos>= ({category, photos, loading}) => {
     const {Meta} = Card;
-    const [photos, setPhotos] = useState<UnsplashPhoto[]>([]);
-    const [page, setPage] = useState(1);
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true)
-    const [isFavorite, setIsFavorite] = useState(false);
-
-    const handleFavorite = () => {
-        setIsFavorite(!isFavorite);
-    };
-    // const [sortBy, setSortBy] = useState("popularity");
-    useEffect(() => {
-        const fetchPhotos = async () => {
-
-            const response: UnsplashResponse = await getPhotos({
-                page,
-                per_page: 12,
-            });
-            console.log(response);
-            setPhotos(response.data);
-            setLoading(false);
-        };
-
-        fetchPhotos();
-    }, [page]);
-
     return (
         <div className="grid">
             {photos?.map((photo: UnsplashPhoto, index) => (

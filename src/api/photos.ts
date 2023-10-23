@@ -18,7 +18,16 @@ export const getPhotos = async ({
 	category?: string;
 }): Promise<UnsplashResponse> => {
 	const response = await axios.get(
-		`https://api.unsplash.com/photos?category=${category}&client_id=${UNSPLASH_ACCESS_KEY}&page=${page}&per_page=${per_page}&order_by=${order_by}`
+		`https://api.unsplash.com/topics/${category}/photos`,
+		{
+			params: {
+				category,
+				client_id: UNSPLASH_ACCESS_KEY,
+				page,
+				per_page,
+				order_by,
+			},
+		}
 	);
 	console.log(response);
 	return response;
