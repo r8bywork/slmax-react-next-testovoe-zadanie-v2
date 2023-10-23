@@ -3,6 +3,13 @@ export type UnsplashPhoto = {
 	urls: {
 		regular: string;
 	};
+	user: {
+		name: string;
+		profile_image: {small: string, medium:string, large: string}
+	}
 	alt_description: string;
 	categories: string[];
+	description: string;
+	created_at: string;
+	links: { html: string; }
 };
