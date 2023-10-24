@@ -16,7 +16,7 @@ const Bar: React.FC<iBar> = ({onCategoryChange, categories, onSortChange}) => {
         <div>
             <Menu onClick={(e) => { setCurrent(e.key);onCategoryChange(e.key) } }
             selectedKeys={[current]} mode="horizontal" className={'mb-5'}>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                     <Menu.Item key={category.slug}>{category.title}</Menu.Item>
                 ))}
             </Menu>

@@ -1,18 +1,18 @@
 "use client"
 import Bar from "@/components/Bar";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PhotosPage from "@/app/photos/page";
 import {getTopics, UnsplashResponseTopics} from "@/api/topics";
 import {UnsplashPhoto, UnsplashTopics} from "@/types/types";
 import {getPhotos, UnsplashResponse} from "@/api/photos";
 import {Pagination} from "antd";
-
-export default function PhotosLayout () {
+// import {getServerSideProps} from "@/app/photos/index";
+const PhotosLayout:React.FC = () =>{
     const [categories, setCategories] = useState<UnsplashTopics[]>([]);
     const [category, setCategory] = useState("animals");
     const [order_by, setOrderBy] = useState("")
 
-    //photos
+    //pages
     const [photos, setPhotos] = useState<UnsplashPhoto[]>([]);
     const [loading, setLoading] = useState(true)
 
@@ -21,11 +21,31 @@ export default function PhotosLayout () {
     const [page, setPage] = useState(0);
     const [total, setTotal] = useState(0);
 
+
+    // Check if getServerSideProps is server side function === true
+    // function isServerSide() {
+    //     return !window.location.href.includes("getInitialProps");
+    // }
+
+    //Server Side getServerSideProps in index.tsx
+    // useEffect(() => {
+    //     const fetchPhotos = async () => {
+    //         const [categoriesResponse,photos] = await getServerSideProps(category, page, pageSize, order_by);
+    //         setCategories(categoriesResponse.data);
+    //         setPhotos(photos.data);
+    //         setTotal(parseInt(photos.headers.get("X-Total") || "0"));
+    //         setLoading(false);
+    //     };
+    //
+    //     fetchPhotos();
+    // }, [page, category, order_by, pageSize]);
+
     useEffect(() => {
         const fetchTopics = async () => {
             const response: UnsplashResponseTopics = await getTopics();
             setCategories(response.data);
         };
+        console.log("Topics")
         fetchTopics();
     }, []);
 
@@ -41,8 +61,9 @@ export default function PhotosLayout () {
             setPhotos(response.data);
             setLoading(false);
         };
+        console.log("Photos")
         fetchPhotos()
-    }, [page, category, order_by, pageSize]);
+    }, [page, category, order_by]);
 
     const handlePaginationChange = (page: number, pageSize: number | undefined) => {
         setPage(page);
@@ -55,7 +76,7 @@ export default function PhotosLayout () {
             <Bar onSortChange={(order_by) => setOrderBy(order_by)} categories={categories} onCategoryChange={(category) => {setCategory(category); setPage(1)}}/>
         </div>
         <div className={'mb-10'}>
-            <PhotosPage photos={photos} category={category} loading={loading}/>
+            <PhotosPage photos={photos} loading={loading}/>
         </div>
         <Pagination
             current={page}
@@ -66,6 +87,6 @@ export default function PhotosLayout () {
             onShowSizeChange={handlePaginationChange}
             pageSizeOptions={[5,10,20,30]}
         />
-
     </div>)
 }
+export default PhotosLayout

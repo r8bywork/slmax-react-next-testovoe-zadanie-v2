@@ -1,4 +1,3 @@
-// "use client";
 import { UnsplashPhoto } from "@/types/types";
 import React from "react";
 import {Avatar, Card } from "antd";
@@ -31,5 +30,4 @@ const PhotosPage: React.FC<iPhotos>= ({ photos, loading}) => {
         </div>
     );
 };
-
 export default PhotosPage;
