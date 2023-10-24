@@ -1,6 +1,5 @@
 "use client"
-import React, {useEffect, useState} from 'react';
-import type { MenuProps } from 'antd';
+import React, { useState} from 'react';
 import { Menu } from 'antd';
 import {UnsplashTopics} from "@/types/types";
 

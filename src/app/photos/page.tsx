@@ -1,19 +1,18 @@
-"use client";
+// "use client";
 import { UnsplashPhoto } from "@/types/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {Avatar, Card } from "antd";
 import "./photos.css"
 
 interface iPhotos {
-    category: string;
     photos: UnsplashPhoto[];
     loading: boolean;
 }
-const PhotosPage: React.FC<iPhotos>= ({category, photos, loading}) => {
+const PhotosPage: React.FC<iPhotos>= ({ photos, loading}) => {
     const {Meta} = Card;
     return (
         <div className="grid">
-            {photos?.map((photo: UnsplashPhoto, index) => (
+            {photos?.map((photo: UnsplashPhoto) => (
                 <Card
                     loading={loading}
                     key={photo.id}

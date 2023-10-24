@@ -1,5 +1,6 @@
 import { UnsplashPhoto } from "@/types/types";
 import axios from "axios";
+
 const UNSPLASH_ACCESS_KEY = "TZRQEy-SLTJNw1_UX9xxLKHI1l_orjSRA-9ShnC1zag";
 export type UnsplashResponse = {
 	data: UnsplashPhoto[];
@@ -28,6 +29,6 @@ export const getPhotos = async ({
 			},
 		}
 	);
-	// console.log(response);
+
 	return response;
 };

@@ -1,5 +1,4 @@
 "use client"
-import type { PropsWithChildren } from "react";
 import Bar from "@/components/Bar";
 import {useEffect, useState} from "react";
 import PhotosPage from "@/app/photos/page";
@@ -8,8 +7,7 @@ import {UnsplashPhoto, UnsplashTopics} from "@/types/types";
 import {getPhotos, UnsplashResponse} from "@/api/photos";
 import {Pagination} from "antd";
 
-export default function PhotosLayout ({children}: PropsWithChildren<unknown>) {
-    const sortByOptions = ["popularity", "date"];
+export default function PhotosLayout () {
     const [categories, setCategories] = useState<UnsplashTopics[]>([]);
     const [category, setCategory] = useState("animals");
     const [order_by, setOrderBy] = useState("")
