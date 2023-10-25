@@ -3,6 +3,7 @@ import axios from "axios";
 
 const UNSPLASH_ACCESS_KEY = "TZRQEy-SLTJNw1_UX9xxLKHI1l_orjSRA-9ShnC1zag";
 export type UnsplashResponse = {
+	headers: any;
 	data: UnsplashPhoto[];
 };
 
