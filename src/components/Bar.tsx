@@ -3,6 +3,7 @@ import React, { useState} from 'react';
 import {Button, Menu} from 'antd';
 import {UnsplashTopics} from "@/types/types";
 import {redirect} from "next/navigation";
+import {sortOptions} from "@/menuConfigs";
 
 interface iBar {
     onCategoryChange: (category: string) => void;
@@ -10,31 +11,22 @@ interface iBar {
     categories: UnsplashTopics[];
 }
 const Bar: React.FC<iBar> = ({onCategoryChange, categories, onSortChange}) => {
-    const [current, setCurrent] = useState("animals");
-    const [currentSort, setCurrentSort] = useState("latest");
+    const [current, setCurrent] = useState<string>("animals");
+    const [currentSort, setCurrentSort] = useState<string>("latest");
     const handleLogout = () => {
-        localStorage.removeItem("token")
-        window.location.href = "/";
+        console.log("asd")
+        localStorage.removeItem(`token`) // Функция redirect() не работает, потому что она вызывается в контексте компонента React, а не в контексте браузера
+        window.location.href = "/auth";
     }
     return (
         <div>
-            <Menu onClick={(e) => { setCurrent(e.key);onCategoryChange(e.key) } }
-            selectedKeys={[current]} mode="horizontal" className={'mb-5'}>
-                {categories?.map((category) => (
-                    <Menu.Item key={category.slug}>{category.title}</Menu.Item>
-                ))}
-            </Menu>
-            <Menu onClick={(e) => { setCurrentSort(e.key); onSortChange(e.key) }}
-                selectedKeys={[currentSort]} mode="horizontal" >
-                <Menu.Item key="latest">Latest</Menu.Item>
-                <Menu.Item key="oldest">Oldest</Menu.Item>
-                <Menu.Item key="popular">Popular</Menu.Item>
-                <Menu.Item key="logout">
+            <Menu onClick={(e) => { setCurrent(e.key);onCategoryChange(e.key) }} items={categories.map((category) => ({
+                key: category.slug,
+                label: category.title,
+            }))} selectedKeys={[current]} mode="horizontal" className={'mb-5'} />
 
-                </Menu.Item>
-            </Menu>
+            <Menu items={sortOptions} onClick={(e) => { setCurrentSort(e.key); onSortChange(e.key) }} selectedKeys={[currentSort]} mode="horizontal" />
             <Button key={"logout"} onClick={handleLogout}>Log Out</Button>
-
         </div>
     );
 };

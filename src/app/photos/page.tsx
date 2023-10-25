@@ -9,10 +9,19 @@ import PhotoCard from "@/components/PhotoCard";
 import {useAuth} from "@/hooks/useAuth";
 import {redirect} from "next/navigation";
 // import {getServerSideProps} from "@/app/photos/index2"; rename index2 to index if u wanna server side
+
 const PhotosPage:React.FC = () =>{
     const {
+        fetchUserData,
         isAuthenticated
     } = useAuth()
+
+    // useEffect(() => {
+    //     if (isAuthenticated) {
+    //         console.log("asd")
+    //     }
+    // }, [isAuthenticated]);
+
     const [categories, setCategories] = useState<UnsplashTopics[]>([]);
     const [category, setCategory] = useState("animals");
     const [order_by, setOrderBy] = useState("latest")
@@ -76,12 +85,28 @@ const PhotosPage:React.FC = () =>{
     }, [page, category, order_by, pageSize]);
 
     // useEffect(() => {
-    //     if(isAuthenticated !== true) {
-    //         console.log(isAuthenticated)
-    //         redirect('/')
-    //     }
+    //     const fetchData = async () => {
+    //         try {
+    //             await fetchUserData();  // Ждем, пока fetchUserData завершится
+    //             console.log(isAuthenticated);  // Теперь проверяем isAuthenticated
+    //             if (!isAuthenticated) {
+    //                 console.log("Unauth")
+    //                 redirect("/auth");
+    //             }
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchData()
     // }, []);
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await fetchUserData();
+    //         console.log(isAuthenticated);
+    //     };
+    //     fetchData();
+    // }, []);
 
     const handlePaginationChange = (page: number, pageSize: number | undefined) => {
         setPage(page);

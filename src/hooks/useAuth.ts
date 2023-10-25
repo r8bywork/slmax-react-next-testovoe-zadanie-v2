@@ -19,6 +19,7 @@ export const useAuth = () => {
     };
 
     const fetchUserData = async () => {
+        // console.log("Fetching user data", localStorage.getItem("token"), typeof localStorage.getItem("token"))
         if (localStorage.getItem("token") !== null) {
             setIsAuthenticated(true);
         } else {
