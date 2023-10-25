@@ -1,14 +1,13 @@
-"use client"
-import {useEffect} from "react";
-import {redirect} from "next/navigation";
+"use client";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 const HomePage = () => {
-
 	useEffect(() => {
-		if (localStorage.getItem('token') !== null) {
-			redirect('/photos');
+		if (localStorage.getItem("token") !== null) {
+			redirect("/photos");
 		} else {
-			redirect('/auth');
+			redirect("/auth");
 		}
 	}, []);
 };
