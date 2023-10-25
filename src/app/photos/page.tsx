@@ -6,9 +6,13 @@ import {UnsplashPhoto, UnsplashTopics} from "@/types/types";
 import {getPhotos} from "@/api/photos";
 import {Pagination} from "antd";
 import PhotoCard from "@/components/PhotoCard";
-// import {getServerSideProps} from "@/app/photos/index";
-
+import {useAuth} from "@/hooks/useAuth";
+import {redirect} from "next/navigation";
+// import {getServerSideProps} from "@/app/photos/index2"; rename index2 to index if u wanna server side
 const PhotosPage:React.FC = () =>{
+    const {
+        isAuthenticated
+    } = useAuth()
     const [categories, setCategories] = useState<UnsplashTopics[]>([]);
     const [category, setCategory] = useState("animals");
     const [order_by, setOrderBy] = useState("latest")
@@ -45,9 +49,9 @@ const PhotosPage:React.FC = () =>{
         const fetchTopics = () => {
             getTopics()
                 .then((response) => setCategories(response.data))
-                .catch(error => {throw new Error(error.message)});
+                .catch((error) => {throw new Error(error.message)});
         };
-        console.log("Topics")
+
         fetchTopics();
     }, []);
 
@@ -67,9 +71,17 @@ const PhotosPage:React.FC = () =>{
             });
 
         };
-        console.log("Photos")
+
         fetchPhotos()
     }, [page, category, order_by, pageSize]);
+
+    // useEffect(() => {
+    //     if(isAuthenticated !== true) {
+    //         console.log(isAuthenticated)
+    //         redirect('/')
+    //     }
+    // }, []);
+
 
     const handlePaginationChange = (page: number, pageSize: number | undefined) => {
         setPage(page);
