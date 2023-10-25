@@ -1,16 +1,9 @@
 "use client";
+import { iBar } from "@/interfaces";
 import { sortOptions } from "@/menuConfigs";
-import { UnsplashTopics } from "@/types/types";
 import { Button, Menu } from "antd";
 import React, { useState } from "react";
 
-interface iBar {
-	onCategoryChange: (category: string) => void;
-	onSortChange: (order_by: string) => void;
-	categories: UnsplashTopics[];
-	onFavoritesTabClick: () => void;
-	disabled?: boolean;
-}
 const Bar: React.FC<iBar> = ({
 	onCategoryChange,
 	categories,

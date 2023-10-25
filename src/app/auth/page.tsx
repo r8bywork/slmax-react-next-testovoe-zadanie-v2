@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useRef, useState} from "react";
+import React, { useState} from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Form, Button, Input } from "antd";
 import {redirect} from "next/navigation";
@@ -10,8 +10,6 @@ const AuthPage: React.FC = () => {
 
     const {
         isAuthenticated,
-        token,
-        fetchUserData,
         login,
         register,
     } = useAuth()

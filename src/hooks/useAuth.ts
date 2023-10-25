@@ -1,11 +1,7 @@
+import { User } from "@/interfaces";
 import { createHmac } from "crypto";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
-
-export interface User {
-	email: string;
-	password: string;
-}
 
 export const useAuth = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

@@ -1,14 +1,15 @@
+import { iPhotos } from "@/interfaces";
 import { UnsplashPhoto } from "@/types/types";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 import React, { useEffect, useState } from "react";
 import "../app/photos/photos.css";
 
-interface iPhotos {
-	photos: UnsplashPhoto[];
-	loading?: boolean;
-	showFavorites?: boolean;
-}
+// interface iPhotos {
+// 	photos: UnsplashPhoto[];
+// 	loading?: boolean;
+// 	showFavorites?: boolean;
+// }
 const PhotoCard: React.FC<iPhotos> = ({ photos, loading, showFavorites }) => {
 	const [favorites, setFavorites] = useState<
 		{ id: string; regularUrl: string }[]
